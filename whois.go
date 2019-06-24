@@ -63,7 +63,7 @@ func Whois(domain string, servers ...string) (result string, err error) {
 	}
 
 	token := "Registrar WHOIS Server:"
-	if IsIpv4(domain) {
+	if IsIP(domain) {
 		token = "whois:"
 	}
 
@@ -93,7 +93,7 @@ func Whois(domain string, servers ...string) (result string, err error) {
 func query(domain string, servers ...string) (result string, err error) {
 	var server string
 	if len(servers) == 0 || servers[0] == "" {
-		if IsIpv4(domain) {
+		if IsIP(domain) {
 			server = IP_WHOIS_SERVER
 		} else {
 			domains := strings.Split(domain, ".")
@@ -131,8 +131,8 @@ func query(domain string, servers ...string) (result string, err error) {
 	return
 }
 
-// IsIpv4 returns string is an ipv4 ip
-func IsIpv4(ip string) bool {
+// IsIP returns bool is an IP
+func IsIP(ip string) bool {
 	i := net.ParseIP(ip)
-	return i.To4() != nil
+	return i != nil
 }
